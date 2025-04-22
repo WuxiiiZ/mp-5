@@ -2,10 +2,16 @@
 
 import client from "@/lib/mongodb";
 
-function isValidUrl(url: string): boolean {
+async function isValidUrl(url: string): Promise<boolean> {
     try{
         const checkUrl = new URL(url);
-        return checkUrl.protocol === "http:" || checkUrl.protocol === "https:";
+        const isHttp =  checkUrl.protocol === "http:" || checkUrl.protocol === "https:";
+        if (!isHttp) {
+            return false;
+        }
+        const response = await fetch(checkUrl);
+        console.log(response);
+        return response.ok;
     }
     catch{
         return false;
