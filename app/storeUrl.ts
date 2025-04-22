@@ -3,7 +3,8 @@
 import client from "@/lib/mongodb";
 
 async function isValidUrl(url: string): Promise<boolean> {
-    try{
+    try
+    {
         const checkUrl = new URL(url);
         const isHttp =  checkUrl.protocol === "http:" || checkUrl.protocol === "https:";
         if (!isHttp) {
