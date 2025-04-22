@@ -2,11 +2,10 @@
 
 import client from "@/lib/mongodb";
 
-
 async function isValidUrl(url: string): Promise<boolean> {
-    try {
+    try{
         const checkUrl = new URL(url);
-        const isHttp = checkUrl.protocol === "http:" || checkUrl.protocol === "https:";
+        const isHttp =  checkUrl.protocol === "http:" || checkUrl.protocol === "https:";
         if (!isHttp) {
             return false;
         }
@@ -21,7 +20,8 @@ async function isValidUrl(url: string): Promise<boolean> {
 
 export async function storeURL(url: string, alias: string){
     const db = client.db("mp-5");
-    if (!isValidUrl(url)){
+    const validate = await isValidUrl(url);
+    if (!validate) {
         return "invalidUrl";
     }
     const repeatAlias = await db.collection("urls").findOne({alias: alias});
