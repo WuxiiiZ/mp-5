@@ -59,50 +59,52 @@ const InputDiv = styled.div`
     }
     `;
 
-export default function Home(){
-  const [url, setUrl] = useState<string>("");
-  const [alias, setAlias] = useState<string>("");
-  const [shortUrl, setShortUrl] = useState<string>("");
 
-  const handleInput = async () => {
+export default function Home(){
+const [url, setUrl] = useState<string>("");
+const [alias, setAlias] = useState<string>("");
+const [shortUrl, setShortUrl] = useState<string>("");
+
+const handleInput = async () => {
     const message = await storeURL(url, alias);
     if (message === "invalidUrl") {
-      alert(`The URL ${url} is invalid. Please try again.`);
+        alert(`The URL ${url} is invalid. Please try again.`);
     } else if (message === "aliasExists") {
-      alert(`The alias ${alias} already exists. Please try another one.`);
+        alert(`The alias ${alias} already exists. Please try another one.`);
     } else {
-      setShortUrl(`https://mp-5-alice-zhangs-projects.vercel.app/${alias}`);
+        setShortUrl(`https://mp-5-alice-zhangs-projects.vercel.app/${alias}`);
     }
-  }
+}
   return(
       <StyledDiv>
-        <Window>
-          <h2>URL Shortener</h2>
-          <InputDiv>
-            <label htmlFor="input-bar"><strong>Your URL</strong></label>
-            <input
-                type="text"
-                placeholder="enter URL"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-            />
-          </InputDiv>
-          <InputDiv>
-            <label htmlFor="input-bar"><strong>Custom Alias </strong></label>
-            <span>https://mp-5-alice-zhangs-projects.vercel.app/
+          <Window>
+              <h2>URL Shortener</h2>
+              <InputDiv>
+                  <label htmlFor="input-bar"><strong>Your URL</strong></label>
+                  <input
+                      type="text"
+                      placeholder="enter URL"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                  />
+              </InputDiv>
+              <InputDiv>
+                  <label htmlFor="input-bar"><strong>Custom Alias </strong></label>
+                  <span>https://mp-5-alice-zhangs-projects.vercel.app/
                   <input
                       type="text"
                       placeholder="alias"
                       value={alias}
                       onChange={(e) => setAlias(e.target.value)}
                   /></span>
-          </InputDiv>
-          <button onClick={()=>handleInput()}>Shorten</button>
-          {shortUrl &&
-              <div>
-                <span><strong>This is the shortened url: </strong></span>
-                <a href={shortUrl}>{shortUrl}</a></div>}
-        </Window>
+              </InputDiv>
+              <button onClick={()=>handleInput()}>Shorten</button>
+              {shortUrl&&
+                  <div>
+                      <span><strong>This is the shortened url: </strong></span>
+                      <a href={shortUrl}>{shortUrl}</a>
+                  </div>}
+          </Window>
       </StyledDiv>
   )
 }
